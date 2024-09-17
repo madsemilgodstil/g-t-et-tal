@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gæt et tal!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #feedback {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .celebration {
+            display: none;
+            font-size: 30px;
+            color: #ff6347;
+            animation: celebration-animation 1s infinite;
+        }
+
+        @keyframes celebration-animation {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gæt et tal mellem 0 og 100</h1>
+    <p>Indtast dit gæt:</p>
+    <input type="number" id="guessInput" min="0" max="100" />
+    <button onclick="checkGuess()">Gæt</button>
+    <p id="feedback"></p>
+    <p class="celebration" id="celebration">🎉 Tillykke! Du gættede rigtigt! 🎉</p>
+
+    <script>
+        const randomNumber = Math.floor(Math.random() * 101);
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const feedback = document.getElementById('feedback');
+            const celebration = document.getElementById('celebration');
+            attempts++;
+
+            if (isNaN(guess)) {
+                feedback.textContent = "Indtast venligst et tal.";
+                feedback.style.color = 'red';
+            } else if (guess < randomNumber) {
+                feedback.textContent = `For lavt! (${attempts} forsøg)`;
+                feedback.style.color = 'blue';
+            } else if (guess > randomNumber) {
+                feedback.textContent = `For højt! (${attempts} forsøg)`;
+                feedback.style.color = 'blue';
+            } else {
+                feedback.textContent = `Rigtigt! Du gættede tallet på ${attempts} forsøg.`;
+                feedback.style.color = 'green';
+                celebration.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>
